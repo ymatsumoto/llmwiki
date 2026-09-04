@@ -599,7 +599,7 @@ _最終更新: 2026-06-04 — sources: N / concepts: N / methods: N / problems: 
   | `status: read` / `open` / `seed` / `active` | `stage:`（`status` は OKF lifecycle 専用に明け渡した、§3.0） |
   | `url:`（`resource` と重複していた） | `resource:` に一本化 |
 
-- **v0.1 → v0.2 の一括移行は 2026-09-02 に完了済み**（155ページ）。スクリプトは `.claude/skills/lint/migrate_v01_to_v02.py`（冪等・frontmatter のみ書き換え・`--dry-run` で確認）。移行時に `type: progress`/`exp` は `source`（`kind: progress`/`exp`）、`plan` は `idea`、`overview` は `topic` へ畳んだ。
+- **v0.1 → v0.2 の一括移行は 2026-09-02 に完了済み**（155ページ）。移行時に `type: progress`/`exp` は `source`（`kind: progress`/`exp`）、`plan` は `idea`、`overview` は `topic` へ畳んだ。
 - 本スキーマは固定ではない。運用して詰まったら人間とLLMで `CLAUDE.md` を改訂する。OKF 側が版を上げたら正準リポジトリの `SPEC.md` を取得して差分を当てる。
 
 ---
