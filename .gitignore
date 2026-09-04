@@ -1,0 +1,21 @@
+# ---- 研究データ（非公開・このリポジトリの対象外） ----
+# raw/ は一次資料（PDF論文・Web記事・メモ・進捗）。著作権物を含むため公開しない。
+/raw/
+# wiki/ は LLM が生成した研究知識ベース。研究内容そのものなので公開しない。
+/wiki/
+
+# ---- 取り残し ----
+# .claude/skills/ の古い複製（2026-09-04 時点で 6 ファイルが旧版、katex_commands.txt 欠落）
+/skills/
+
+# ---- ローカル設定 ----
+# マシン固有の権限設定。共有すべき設定は .claude/settings.json に書く
+.claude/settings.local.json
+
+# ---- OS / エディタの副産物 ----
+desktop.ini
+Thumbs.db
+.DS_Store
+*.swp
+__pycache__/
+*.pyc
