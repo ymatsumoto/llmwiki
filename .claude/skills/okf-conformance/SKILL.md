@@ -42,12 +42,12 @@ description: 本Wiki（wiki/ 配下）と Open Knowledge Format (OKF) v0.2 の�
 | `verified` (`by`/`at`) | OKF 推奨 | 人間確認時のみ。LLM は自分を書かない（`CLAUDE.md` §0 ルール7） |
 | `status` | OKF 推奨 | **lifecycle 専用**（`draft`/`stable`/`deprecated`）。領域別の段階は `stage` |
 | `stale_after` | OKF 推奨 | ISO 8601 datetime |
-| `sources` (`id`/`resource`/`title`/`relation`/`author`/`usage_count`/`last_modified`) | OKF 推奨（`relation` は拡張） | `relation`: `key-source` \| `arising-from` \| `inspired-by` \| `contradicts` \| `adjacent` |
+| `sources` (`id`/`resource`/`title`/`relation`/`author`/`usage_count`/`last_modified`) | OKF 推奨（`relation` は拡張） | `relation`: `key-source` \| `arising-from` \| `inspired-by` \| `builds-on` \| `departs-from` \| `contradicts` \| `adjacent` |
 | `usage_window` | OKF 推奨 | 被引用数を `usage_count` に残す場合の集計期間 |
 | `runtime` / `parameters` / `computation` / `executor` / `attester` | OKF（Attested Computation で `runtime` は必須） | `computations/` のページのみ |
 | `stage` | OKF 拡張 | source: `to-read`/`skimmed`/`read`/`deep-read`、topic: `active`/`mature`/`dormant`、problem: `open`/`partially-addressed`/`solved`、idea: `seed`/`developing`/`promising`/`validated`/`parked`/`discarded` |
 | `root` | OKF外（ツール） | **プロジェクト root の**ディレクトリ名。値は `CLAUDE.md` を直下に置いたディレクトリの名前（全ページ同一値）。**バンドル root（`wiki/`）とは別物** — `sources[].resource` が `../../raw/` を指すとおり参照資産はバンドル外にあるので、ツールが見る単位はプロジェクト root。「その名前を持つ最も近い祖先ディレクトリ」と解釈されるので階層に依らず同一値。相対パス（深さ依存）・絶対パス（環境依存）で書かない。`[[wikilink]]` を使わない本Wikiでは現状メタデータのみ（`CLAUDE.md` §3.0） |
-| `provenance` | OKF外（v0.1 由来） | 全ページに `literature` が入っている。v0.2 のどの規約にも対応が無く、意味が定まっていない。新規ページでは書かない。既存分の扱いは未決 |
+| `provenance` | OKF外（v0.1 由来・不使用） | v0.1 で全ページに `literature` を入れていた名残り。v0.2 のどの規約にも対応が無く、現在はどのページにも無い。**書かない**（provenance は `sources` が担う） |
 | `kind` / `citekey` / `authors` / `year` / `venue` / `created` / `ingested` / `rating` / `severity` / `maturity` / `confidence` / `hypothesis` / `aliases` / `entity_kind` | OKF 拡張 | ドメイン運用のための追加キー。OKF は未知キーを許容 |
 | 横の関係リスト（`concepts` / `methods` / `problems` / `entities` / `related` / `solves` / `addresses` / `addressed_by` / `ideas` / `open_problems` / `related_problems` / `related_ideas` / `related_methods`） | OKF 拡張 | 値は **Concept ID 素スカラ**（`dir/slug`）。`[[ ]]`・引用符は使わない |
 

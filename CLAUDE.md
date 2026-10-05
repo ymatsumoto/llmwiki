@@ -417,7 +417,7 @@ sources:
 - `resource`（**エントリ内で必須**）: 追跡できる実体。次のいずれか — Wiki内 source ページへの**相対パス**（`../sources/<citekey>.md`）／ `raw/` 資産への**相対パス**（`../../raw/papers/<citekey>.pdf`）／ 外部 URL・DOI ／ 追跡不能な範囲記述（例 `PubMed の <検索式> の検索結果 120 件`）。
 - `id`: **citekey と一致させる**。本文の脚注 `[^citekey]` の join key になるので、本文で引くなら必須。
 - `title`: 人間可読なラベル。
-- `relation`（本Wiki拡張）: `key-source`（主要な出典）／ `arising-from`（この課題を生んだ）／ `inspired-by`（着想元）／ `contradicts`（対立・反証）／ `adjacent`（隣接）。v0.1 の `key_sources` / `arising_from` / `inspired_by` / `related_sources` はこの1フィールドに統合された。
+- `relation`（本Wiki拡張）: `key-source`（主要な出典）／ `arising-from`（この課題を生んだ）／ `inspired-by`（着想元）／ `builds-on`（これを土台に発展させる）／ `departs-from`（これから意図的に離れる）／ `contradicts`（対立・反証）／ `adjacent`（隣接）。`builds-on` / `departs-from` は主に idea ページで使い、本文の「関連研究との位置づけ」表（§3.7）の関係語と揃える。v0.1 の `key_sources` / `arising_from` / `inspired_by` / `related_sources` はこの1フィールドに統合された。
 - 任意の信頼度シグナル: `author`（actor 表記）／ `last_modified`（原資料の更新時刻）／ `usage_count` + `usage_window`（被引用数を残したいときに使ってよい。`usage_window: { from: <出版日時>, to: <確認日時> }`）。
 
 ### 4.2 本文中の attribution
@@ -441,6 +441,7 @@ GA4 の `events_` テーブルは日次シャーディングされる。[^ga4-sc
 ### 4.3 BibTeX 連携
 
 - **`raw/refs.bib` が引用の単一の真実**。ソースを取り込んだら、対応するBibTeXエントリが `refs.bib` にあることを確認し、無ければ作成する。
+- **`kind: memo` / `progress` のソースは BibTeX 不要**（自分のメモ・進捗は論文で引用しないため）。`kind: paper` / `web` / `exp` は必須。メモを論文で引用する必要が出たら、その時点でエントリを足す。
 - BibTeX の `citekey` と、ソースページの**ファイル名**・`citekey` フィールド・他ページの `sources[].id` を**完全一致**させる。
 - これにより `\cite{vaswani2017attention}`（LaTeX原稿）と、Wiki内のファイル `sources/vaswani2017attention.md`・そこへの相対リンク `[title](../sources/vaswani2017attention.md)`・frontmatter の `sources[].id` が一本の鎖で繋がり、Wikiから論文執筆へシームレスに接続する。
 
