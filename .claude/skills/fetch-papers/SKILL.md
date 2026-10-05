@@ -54,7 +54,7 @@ description: 参考文献リスト（DOI/URL を含むテキスト/markdown）�
    echo "$HTML" | grep -oiE '<meta[^>]+citation_pdf_url[^>]+>' | grep -oE 'https?://[^"'\'' ]+\.pdf' | head -1
    ```
 - ダウンロード: `curl -sL -A "Mozilla/5.0 (research-wiki fetch-papers)" --max-time 60 -o "raw/papers/<name>.pdf" "<PDF_URL>"`、その後 `sleep 1`。
-- **ファイル名**: Crossref で著者姓・年・キーワードを取り `<著者姓><年><kw>.pdf`（citekey 風, §5）にすると `raw/papers/` が読みやすい。判らなければ DOI のサフィックスを sanitize して使う。最終 citekey は /ingest が再決定するので厳密でなくてよい。
+- **ファイル名**: Crossref で著者姓・年・キーワードを取り `<著者姓><年><kw>.pdf`（citekey 風, §5）にすると `raw/papers/` が読みやすい。判らなければ DOI のサフィックスを sanitize して使う。最終 citekey は /ingest が再決定し、ずれていれば /ingest がファイル名を citekey に揃える（`ingest` skill §3.1）ので厳密でなくてよい。
    ```bash
    curl -s "https://api.crossref.org/works/<DOI>" | jq -r '.message | (.author[0].family), (.published."date-parts"[0][0]), .title[0]'
    ```

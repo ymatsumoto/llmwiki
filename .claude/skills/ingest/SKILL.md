@@ -32,7 +32,7 @@ description: raw/ 配下のソース（PDF論文・Web記事・メモ・進捗�
   - **表の数値は `.layout.txt` から取る** — `.txt` 側の表は崩壊しているので信用しない。要約に転記する数値はこちらが根拠。
   - 20ページ超なら **abstract → intro → conclusion** を先に読み、全体像を掴んでから method / results を読む。
   - **Readツール（ページ画像）は `read-raw-sources` §3 の場合に限る** — 図が要点を握るとき、2パスの両方で崩れる複雑な表、スキャンPDF。該当ページだけを開く（`raw/assets/` に切り出された図があれば併読）。
-  - `raw/` は読み取り専用。抽出テキストを `raw/` に置かない。
+  - `raw/` は読み取り専用（例外は §3.1 の PDF リネームのみ）。抽出テキストを `raw/` に置かない。
 - **Web記事**: `raw/web/*.md`（Web Clipper等で取り込み済みmarkdown）を読む。インライン画像は本文を読んだ後に必要なものだけ別途確認。`raw/` にまだ無くURLだけ与えられた場合は WebFetch で取得し、人間に「`raw/web/` に保存してよいか」確認の上で保存（rawは人間がキュレートする層なので原則は人間に促す）。
 - **メモ**: `raw/memos/*.md` を読む。メモは「自分の思考」なので、要約より **構造化**（どの課題・どのアイデアに関係するか）を重視する。
 
@@ -40,6 +40,22 @@ description: raw/ 配下のソース（PDF論文・Web記事・メモ・進捗�
 
 `CLAUDE.md` §5の規則で `citekey` を生成（例 `vaswani2017attention`）。人間に確認・調整を促す。
 論文なら `raw/refs.bib` に対応BibTeXエントリがあるか確認。**無ければ ingest の最後に追記**する（§8）。
+
+### 3.1 PDF を citekey 名にリネームする（PDF の ingest 時のみ）
+
+`raw/` を書き換えない原則（`CLAUDE.md` §0 不変ルール1）の**唯一の例外**。ファイル名を `CLAUDE.md` §5 の citekey に揃え、`raw/papers/<citekey>.pdf` ↔ `wiki/sources/<citekey>.md` ↔ `refs.bib` の鎖を名前だけで辿れるようにする。
+
+- **対象**: `raw/papers/` の PDF で、ファイル名が `<citekey>.pdf` でないもの。PDF 以外（XML・Web・メモ・進捗）と、今回の ingest 対象でないファイルには適用しない。
+- **タイミング**: citekey が確定してから（対話モードなら人間の確認後）、ソースページを書く前に行う。
+- **手順**:
+  ```bash
+  mv -n raw/papers/<元の名前>.pdf raw/papers/<citekey>.pdf   # -n: 既存ファイルを上書きしない
+  head -c 4 raw/papers/<citekey>.pdf                          # → %PDF
+  pdfinfo   raw/papers/<citekey>.pdf | grep Pages              # → リネーム前と同じページ数
+  ```
+  - `<citekey>.pdf` が既にあれば**中止して人間に報告**する（別論文との citekey 衝突か、重複取り込みの疑い）。
+- **許されるのはリネームだけ**。内容の編集・変換・圧縮・削除はしない。
+- **記録**: 以降のページ（`sources[].resource`）と `refs.bib` は新しいパスで参照する。`wiki/log.md` の Ingest エントリに「`<元の名前>.pdf` → `<citekey>.pdf`」を書く。
 
 ## 4. 要点を人間と確認（対話モード時）
 
@@ -55,7 +71,7 @@ description: raw/ 配下のソース（PDF論文・Web記事・メモ・進捗�
 ## 5. ソースページを書く
 
 `wiki/sources/<citekey>.md` を `CLAUDE.md` §3.1 のスキーマで作成。
-- frontmatter を完全に埋める。`type`（OKF必須）・`title`・`description`（日本語一行）・`generated: { by: claude-code/<model>, at: <ISO 8601 + offset> }`・`root: research` を必ず入れる。`root` は**本 skill が作る全ページ共通で常にこの値**（§6・§7 の concept/method/problem ページも同じ。`CLAUDE.md` §3.0）。`stage`（`to-read`/`skimmed`/`read`/`deep-read`）と `status`（OKF lifecycle。既定 `stable`、骨組みだけなら `draft`）を取り違えない（`CLAUDE.md` §3.0）。
+- frontmatter を完全に埋める。`type`（OKF必須）・`title`・`description`（日本語一行）・`generated: { by: claude-code/<model>, at: <ISO 8601 + offset> }`・`root`（`CLAUDE.md` §3.0 のプロジェクト root 名）を必ず入れる。`root` は**本 skill が作る全ページ共通で常にこの値**（§6・§7 の concept/method/problem ページも同じ。`CLAUDE.md` §3.0）。`stage`（`to-read`/`skimmed`/`read`/`deep-read`）と `status`（OKF lifecycle。既定 `stable`、骨組みだけなら `draft`）を取り違えない（`CLAUDE.md` §3.0）。
 - **provenance は frontmatter の `sources`**（`CLAUDE.md` §4.1）。ソースページ自身は一次資料を指す: `- { id: <citekey>, resource: ../../raw/papers/<citekey>.pdf, title: "..." }`。
 - `concepts`/`methods`/`problems`/`entities` は**横の関係**なので **Concept ID** の素スカラ（例 `concepts/self-attention`）で記す。
 - 本文の相互参照は**相対 markdown リンク**（例 `[title](../concepts/self-attention.md)`）。**`## 引用 (Citations)` 節は作らない**（v0.2 で廃止）。Wiki にページが無い外部資料を引くときは `sources` にエントリを足し `[^id]` 脚注で紐付ける（§4.2）。

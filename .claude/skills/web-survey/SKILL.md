@@ -32,7 +32,7 @@ Web上から関連研究を探索し、**Wikiの現状と照らしてギャッ�
    - 各候補に想定 `citekey` を付ける。
    - 人間に「どれを `raw/` に入れて `/ingest` するか」を選ばせる（rawは人間がキュレートする層）。
 
-6. **filing（任意）**: 探索で得た領域構造の理解が価値あるものなら、`wiki/topics/<slug>.md` を作成/更新して残すことを提案。発見した課題は `wiki/problems/` に stub 化。新規ページの frontmatter は `CLAUDE.md` §3.0 に従う（`type`/`title`/`description`/`generated`/`root: research` 必須）。
+6. **filing（任意）**: 探索で得た領域構造の理解が価値あるものなら、`wiki/topics/<slug>.md` を作成/更新して残すことを提案。発見した課題は `wiki/problems/` に stub 化。新規ページの frontmatter は `CLAUDE.md` §3.0 に従う（`type`/`title`/`description`/`generated`/`root`（§3.0 のプロジェクト root 名）必須）。
 
 7. **wiki/log.md に追記**（OKF §9, 新しい順）:
    ```markdown

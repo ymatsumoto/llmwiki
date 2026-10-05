@@ -14,7 +14,7 @@ description: 研究アイデア・仮説を捕捉し、課題（problem）にひ
 2. **slug を決める**: `idea-<短いkebab>`（例 `idea-relative-pos-graph`）。人間に確認。
 
 3. **課題に接地（必須）**: `wiki/problems/` を見て、このアイデアが挑む課題ページを特定する。
-   - 該当する problem が無ければ、**先に `wiki/problems/<slug>.md` を作る**ことを提案・実行（`CLAUDE.md` §3.6、`title`/`description`/`generated`/`root: research` を付与）。
+   - 該当する problem が無ければ、**先に `wiki/problems/<slug>.md` を作る**ことを提案・実行（`CLAUDE.md` §3.6、`title`/`description`/`generated`/`root`（§3.0 のプロジェクト root 名）を付与）。
    - `addresses` に最低1つの Concept ID `problems/<slug>` を入れる（本文では相対リンク `[title](../problems/<slug>.md)`）。
 
 4. **関連研究で位置づける**: concept/method/source ページと（必要なら `/web-survey`）から探す:
@@ -22,7 +22,7 @@ description: 研究アイデア・仮説を捕捉し、課題（problem）にひ
    - このアイデアが **builds-on / departs-from** する研究
    - このアイデアと **contradicts** しうる研究（反証リスク）
 
-5. **`wiki/ideas/<slug>.md` を書く**: `CLAUDE.md` §3.7 のスキーマで（`type`/`title`/`description`/`generated`/`root: research` 必須。`addresses` は Concept ID、着想元は `sources` に `relation: inspired-by`、本文は相対リンク）。特に:
+5. **`wiki/ideas/<slug>.md` を書く**: `CLAUDE.md` §3.7 のスキーマで（`type`/`title`/`description`/`generated`/`root`（§3.0 のプロジェクト root 名）必須。`addresses` は Concept ID、着想元は `sources` に `relation: inspired-by`、本文は相対リンク）。特に:
    - `## 仮説` — 一行で核心。
    - `## スケッチ` — 「何を実装・証明すべきか」が分かる程度に具体的に。
    - `## 反証条件` — 何が観測されたら間違いと分かるか（ここを必ず埋める。アイデアを科学にする）。

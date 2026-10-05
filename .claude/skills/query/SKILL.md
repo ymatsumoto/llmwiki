@@ -23,7 +23,7 @@ Wikiの蓄積を使って問いに答える。**RAGのように毎回ゼロか�
 5. **filing 判断（重要）**: 回答が「非自明な分析・比較・発見した接続」を含むなら、揮発させずWikiに残す。
    - 比較・分析 → `wiki/topics/<slug>.md` または新しい `wiki/concepts/<slug>.md`
    - 新たに見えた課題 → `wiki/problems/<slug>.md`（stubでも可）
-   - 新規ページは `type`/`title`/`description`/`generated`/`root: research` 必須、provenance は `sources`、横の関係は Concept ID、本文は相対リンク。内容が薄い stub なら `status: draft`。人間に「この回答を <ページ> として保存しますか？」と確認してから filing。
+   - 新規ページは `type`/`title`/`description`/`generated`/`root`（§3.0 のプロジェクト root 名）必須、provenance は `sources`、横の関係は Concept ID、本文は相対リンク。内容が薄い stub なら `status: draft`。人間に「この回答を <ページ> として保存しますか？」と確認してから filing。
 
 6. **ギャップの記録**: 回答中に判明した欠落（ページが無い・矛盾が未解決・問いに答えられない）を控える。重要なら problem stub を作るか、`/web-survey` / `/ingest` を提案。
 
